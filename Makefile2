@@ -1,0 +1,35 @@
+CC = gcc
+CFLAGS = -std=c99
+LDFLAGS = -L. -lencrypt -lStringUtils
+
+.PHONY: all clean
+
+all: decoder encoder 
+
+decoder: libencrypt.so libStringUtils.so decoder.o
+	$(CC) decoder.o $(LDFLAGS) -o decoder
+
+encoder: libencrypt.so libStringUtils.so encoder.o
+	$(CC) encoder.o $(LDFLAGS) -o encoder
+
+libencrypt.so: encrypt.o libStringUtils.so 
+	$(CC) encrypt.o -L. -lstr -shared -o libencrypt.so
+
+libStringUtils.so: StringUtils.o
+	$(CC) StringUtils.o -shared -o libStringUtils.so
+
+StringUtils.o:
+	$(CC) -c -fPIC StringUtils.c $(CFLAGS)
+
+encrypt.o:
+	$(CC) -c -fPIC encrypt.c $(CFLAGS)
+
+encoder.o:
+	$(CC) -c encoder.c $(CFLAGS)
+
+decoder.o:
+	$(CC) -c decoder.c $(CFLAGS)
+
+clean:
+	rm -rf *.o *.so encoder decoder
+
