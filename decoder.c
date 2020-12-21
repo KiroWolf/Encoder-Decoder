@@ -29,6 +29,7 @@ int main(int argc, char** argv)
 
 	mutableToLower(method);
 	mutableFilter(method);
+	mutableStrip(method);
 	if ((method[0] != 'x' || method[1] != 'o' || method[2] != 'r')
 		&& (method[0] != 'c' || method[1] != 'a' || method[2] != 'e'))
 	{
