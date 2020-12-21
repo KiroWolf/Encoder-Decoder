@@ -1,4 +1,4 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "StringUtils.h"
@@ -93,7 +93,7 @@ void mutableStrip(char* text)
     //подсчет пробелов спереди
     for (int i = 0; i < sizeof(text); i++)
     {
-        if (text[i] == ' ')
+        if (text[i] == ' ' || text[i] == NULL)
         {
             count1++;
         }
@@ -108,7 +108,7 @@ void mutableStrip(char* text)
     {
         for (int i = sizeof(text) - 1; i >= 0; i--)
         {
-            if (text[i] != ' ')
+            if (text[i] != ' ' || text[i] != NULL)
             {
                 mode++;
                 if (mode < 3)
@@ -126,23 +126,17 @@ void mutableStrip(char* text)
             }
         }
     }
-    //удаление задних пробелом присваиванием к NULL
-    if (count2 > 0)
-    {
-        for (int i = sizeof(text) - count2 - 1; i < sizeof(text) - 1; i++)
-        {
-            text[i] = NULL;
-        }
-    }
-    /*удаление передних пробелов смещением элементов и последующее присваиваниее смещенного элемента к NULL*/
+
+    /*удаление передних пробелов смещением элементов*/
     if (count1 > 0)
     {
-        for (int i = 0; i < 128 - count1; i++)
+        for (int i = 0; i < sizeof(text) - count1; i++)
         {
             text[i] = text[i + count1];
             text[i + count1] = NULL;
         }
     }
+    text[sizeof(text) - count1 - count2] = '\0';//"отрезание" текста, от пробелов
 }
 
 char* immutableStrip(char* text)
@@ -157,7 +151,7 @@ char* immutableStrip(char* text)
     //подсчет пробелов спереди
     for (int i = 0; i < sizeof(text); i++)
     {
-        if (result[i] == ' ')
+        if (text[i] == ' ' || text[i] == NULL)
         {
             count1++;
         }
@@ -172,7 +166,7 @@ char* immutableStrip(char* text)
     {
         for (int i = sizeof(text) - 1; i >= 0; i--)
         {
-            if (result[i] != ' ')
+            if (text[i] != ' ' || text[i] != NULL)
             {
                 mode++;
                 if (mode < 3)
@@ -190,15 +184,8 @@ char* immutableStrip(char* text)
             }
         }
     }
-    //удаление задних пробелом присваиванием к NULL
-    if (count2 > 0)
-    {
-        for (int i = sizeof(text) - count2 - 1; i < sizeof(text) - 1; i++)
-        {
-            result[i] = NULL;
-        }
-    }
-    /*удаление передних пробелов смещением элементов и последующее присваиваниее смещенного элемента к NULL*/
+
+    /*удаление передних пробелов смещением элементов*/
     if (count1 > 0)
     {
         for (int i = 0; i < sizeof(text) - count1; i++)
@@ -207,6 +194,7 @@ char* immutableStrip(char* text)
             result[i + count1] = NULL;
         }
     }
+    text[sizeof(text) - count1 - count2] = '\0';//"отрезание" текста, от пробелов
 
     return result;
 }
