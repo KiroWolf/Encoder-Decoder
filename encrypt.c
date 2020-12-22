@@ -8,7 +8,7 @@ char Alphs[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'
 
 char* immutableCaesarEncoder(char* text, int offset)
 {
-    //простое смещение по алфавиту
+    //РїСЂРѕСЃС‚РѕРµ СЃРјРµС‰РµРЅРёРµ РїРѕ Р°Р»С„Р°РІРёС‚Сѓ
     //char* result = (char*)calloc(sizeof(text), sizeof(text));
     //memcpy(result, text, sizeof(text));
     char* result;
@@ -17,15 +17,15 @@ char* immutableCaesarEncoder(char* text, int offset)
     {
         for (int j = 0; j < 26; j++)
         {
-            if (result[i] == Alphf[j % 27])
+            if (result[i] == Alphf[j % 26])
             {
-                result[i] = Alphf[(j + offset) % 27];
+                result[i] = Alphf[(j + offset) % 26];
                 break;
             }
 
-            if (result[i] == Alphs[j % 27])
+            if (result[i] == Alphs[j % 26])
             {
-                result[i] = Alphs[(j + offset) % 27];
+                result[i] = Alphs[(j + offset) % 26];
                 break;
             }
         }
@@ -36,20 +36,20 @@ char* immutableCaesarEncoder(char* text, int offset)
 
 void mutableCaesarEncoder(char* text, int offset)
 {
-    //простое смещение по алфавиту
+    //РїСЂРѕСЃС‚РѕРµ СЃРјРµС‰РµРЅРёРµ РїРѕ Р°Р»С„Р°РІРёС‚Сѓ
     for (int i = 0; i < 128; i++)
     {
         for (int j = 0; j < 26; j++)
         {
-            if (text[i] == Alphf[j % 27])
+            if (text[i] == Alphf[j % 26])
             {
-                text[i] = Alphf[(j + offset) % 27];
+                text[i] = Alphf[(j + offset) % 26];
                 break;
             }
 
-            if (text[i] == Alphs[j % 27])
+            if (text[i] == Alphs[j % 26])
             {
-                text[i] = Alphs[(j + offset) % 27];
+                text[i] = Alphs[(j + offset) % 26];
                 break;
             }
         }
@@ -58,24 +58,30 @@ void mutableCaesarEncoder(char* text, int offset)
 
 char* immutableCaesarDecoder(char* text, int offset)
 {
-    //простое смещение по алфавиту
+    //РїСЂРѕСЃС‚РѕРµ СЃРјРµС‰РµРЅРёРµ РїРѕ Р°Р»С„Р°РІРёС‚Сѓ
     //char* result = (char*)calloc(sizeof(text), sizeof(text));
     //memcpy(result, text, sizeof(text));
     char* result;
     strcpy(result, text);
+    int buff;
     for (int i = 0; i < 128; i++)
     {
         for (int j = 0; j < 26; j++)
         {
-            if (result[i] == Alphf[j % 27])
+            buff = (j - offset) % 26;
+            if (buff < 0)
             {
-                result[i] = Alphf[(j - offset) % 27];
-                break;
+                buff = 26 + buff;
             }
 
-            if (result[i] == Alphs[j % 27])
+            if (result[i] == Alphf[j % 26])
             {
-                result[i] = Alphs[(j - offset) % 27];
+                result[i] = Alphf[buff];
+                break;
+            }
+            if (result[i] == Alphs[j % 26])
+            {
+                result[i] = Alphs[buff];
                 break;
             }
         }
@@ -86,20 +92,26 @@ char* immutableCaesarDecoder(char* text, int offset)
 
 void mutableCaesarDecoder(char* text, int offset)
 {
-    //простое смещение по алфавиту
+    //РїСЂРѕСЃС‚РѕРµ СЃРјРµС‰РµРЅРёРµ РїРѕ Р°Р»С„Р°РІРёС‚Сѓ
+    int buff;
     for (int i = 0; i < 128; i++)
     {
         for (int j = 0; j < 26; j++)
         {
-            if (text[i] == Alphf[j % 27])
+            buff = (j - offset) % 26;
+            if (buff < 0)
             {
-                text[i] = Alphf[(j - offset) % 27];
-                break;
+                buff = 26 + buff;
             }
 
-            if (text[i] == Alphs[j % 27])
+            if (text[i] == Alphf[j % 26])
             {
-                text[i] = Alphs[(j - offset) % 27];
+                text[i] = Alphf[buff];
+                break;
+            }
+            if (text[i] == Alphs[j % 26])
+            {
+                text[i] = Alphs[buff];
                 break;
             }
         }
@@ -108,7 +120,7 @@ void mutableCaesarDecoder(char* text, int offset)
 
 char* immutableXorCoder(char* text, char* key)
 {
-    //шифрование/дешифрование исключающим ИЛИ
+    //С€РёС„СЂРѕРІР°РЅРёРµ/РґРµС€РёС„СЂРѕРІР°РЅРёРµ РёСЃРєР»СЋС‡Р°СЋС‰РёРј РР›Р
     int keySize = sizeof(key);
     //char* result = (char*)calloc(sizeof(text), sizeof(text));
     //memcpy(result, text, sizeof(text));
@@ -124,7 +136,7 @@ char* immutableXorCoder(char* text, char* key)
 
 void mutableXorCoder(char* text, char* key)
 {
-    //шифрование/дешифрование исключающим ИЛИ
+    //С€РёС„СЂРѕРІР°РЅРёРµ/РґРµС€РёС„СЂРѕРІР°РЅРёРµ РёСЃРєР»СЋС‡Р°СЋС‰РёРј РР›Р
     int keySize = sizeof(key);
     for (int i = 0; i < 128; i++)
     {
