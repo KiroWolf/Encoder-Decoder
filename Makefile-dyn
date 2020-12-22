@@ -13,7 +13,7 @@ encoder: libencrypt.so libStringUtils.so encoder.o
 	$(CC) encoder.o $(LDFLAGS) -o encoder
 
 libencrypt.so: encrypt.o libStringUtils.so 
-	$(CC) encrypt.o -L. -lstr -shared -o libencrypt.so
+	$(CC) encrypt.o -L. -lStringUtils -shared -o libencrypt.so
 
 libStringUtils.so: StringUtils.o
 	$(CC) StringUtils.o -shared -o libStringUtils.so
