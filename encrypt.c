@@ -138,8 +138,8 @@ void mutableXorCoder(char* text, char* key)
 {
     //шифрование/дешифрование исключающим ИЛИ
     int keySize = sizeof(key);
-    for (int i = 0; i < 128; i++)
+    for (int i = 0; i < 128; ++i)
     {
-        text[i] = text[i] ^ key[i % keySize + 1];
+        text[i] = text[i] ^ key[i % keySize];
     }
 }
