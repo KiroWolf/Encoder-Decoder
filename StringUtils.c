@@ -5,7 +5,7 @@
 
 char Alph1[] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
 char Alph2[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
-char Numbers[] = { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+char Numbers[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 
 void mutableToLower(char* text)
 {
@@ -286,7 +286,7 @@ char* immutableFilter(char* text)
                 break;
             }
         }
-        for (int j = 0; j < 9; j++)
+        for (int j = 0; j < 10; j++)
         {
             if (result[i] == Numbers[j])
             {
@@ -316,7 +316,7 @@ int isNumber(char* text)
     for (int i = 0; i < sizeof(text); i++)
     {
         bool = 0;
-        for (int j = 0; j < 9; j++)
+        for (int j = 0; j < 10; j++)
         {
             if (text[i] == Numbers[j] || text[i] == '\0' || text[i] == '\n')
             {
