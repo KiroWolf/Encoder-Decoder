@@ -126,9 +126,9 @@ char* immutableXorCoder(char* text, char* key)
     //memcpy(result, text, sizeof(text));
     char* result;
     strcpy(result, text);
-    for (int i = 0; i < 128; i++)
+    for (int i = 0; i < 128; ++i)
     {
-        result[i] = result[i] ^ key[i % keySize + 1];
+        result[i] = result[i] ^ key[i % keySize];
     }
 
     return result;
