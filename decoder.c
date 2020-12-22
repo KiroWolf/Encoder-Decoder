@@ -37,9 +37,6 @@ int main(int argc, char** argv)
 		return -1;
 	}
 
-	mutableFilter(text);
-	mutableStrip(text);
-
 	if (method[0] == 'x')
 	{
 		mutableXorCoder(text, key);
